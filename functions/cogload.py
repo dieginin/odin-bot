@@ -6,7 +6,7 @@ from discord.ext import commands
 async def cogload(bot: commands.Bot) -> int:
     cogs_loaded = 0
 
-    for folder in ["commands", "events", "handlers"]:
+    for folder in ["commands", "handlers"]:
         for filename in os.listdir(f"./{folder}"):
             if filename.endswith(".py"):
                 try:
