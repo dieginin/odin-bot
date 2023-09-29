@@ -16,10 +16,10 @@ class DBClient:
         result = self.col.insert_one({"_id": id, **document})
         return result.inserted_id
 
-    def find(self, id: int) -> Player | None:
+    def find(self, id: int) -> Player:
         result = self.col.find_one({"_id": id})
 
-        result = Player(**result) if result else None
+        result = Player(**result) if result else Player(0, 0, 0)
 
         return result
 
