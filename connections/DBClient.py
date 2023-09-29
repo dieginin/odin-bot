@@ -23,6 +23,14 @@ class DBClient:
 
         return result
 
+    def update(self, id: int, update_data):
+        result = self.col.update_one({"_id": id}, {"$set": update_data})
+        return result.modified_count
+
+    def delete(self, id: int):
+        result = self.col.delete_one({"_id": id})
+        return result.deleted_count
+
     def test(self) -> bool:
         try:
             self.client.admin.command("ping")
