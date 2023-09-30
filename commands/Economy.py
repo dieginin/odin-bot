@@ -49,9 +49,7 @@ class Economy(commands.Cog):
 
         if bool(pl.save()):
             em.color = discord.Color.green()
-            em.description = (
-                f"Ganaste 🪙 `{earns}`\nAhora tienes 👛 `{pl.pocket:,}` en la bolsa"
-            )
+            em.description = f"Ganaste 🪙 `{earns}`\nAhora tienes 👛 `{pl.pocket:,}`"
         else:
             em.color = discord.Color.dark_red()
             em.description = f"Tuve un 💨\nNo pude guardar \nGanancia de 🪙 `{earns}`"
