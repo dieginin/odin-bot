@@ -67,6 +67,17 @@ class ErrorHandler(commands.Cog):
             )
 
             await interaction.followup.send(embed=em)
+        elif isinstance(error.__cause__, InsufficientBalance):
+            coins, bank = error.__cause__.coins, error.__cause__.bank
+
+            em = discord.Embed(color=discord.Color.dark_red())
+            em.title = "Balance Insuficiente"
+            em.description = f"No tienes 🪙 `{coins:,}`\nTienes 🏦 `Banco: {bank:,}`"
+            em.set_thumbnail(
+                url="https://cdn-icons-png.flaticon.com/512/4952/4952656.png"
+            )
+
+            await interaction.followup.send(embed=em)
         elif isinstance(error.__cause__, SecureCoins):
             coins, pocket, secure = (
                 error.__cause__.coins,
