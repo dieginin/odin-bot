@@ -1,3 +1,8 @@
+from copy import deepcopy
+
+from connections import players
+
+
 class Player:
     def __init__(
         self,
@@ -8,3 +13,10 @@ class Player:
         self.id = _id
         self.pocket = pocket
         self.bank = bank
+
+    def save(self):
+        character_dict = deepcopy(vars(self))
+        character_dict.pop("id")
+
+        result = players.update_one({"_id": self.id}, {"$set": character_dict})
+        return result.modified_count
