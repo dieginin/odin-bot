@@ -5,6 +5,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from components import EcoEmbed
 from functions import getplayer, playerload
 
 
@@ -21,12 +22,9 @@ class Economy(commands.Cog):
         await interaction.response.defer()
 
         pl = getplayer(interaction.user, miembro)
-        m = discord.utils.get(self.bot.get_all_members(), id=pl.id)
+        em = EcoEmbed(self.bot, pl.id)
 
-        em = discord.Embed(color=discord.Color.random())
         em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/1138/1138038.png")
-        if m:
-            em.set_author(name=m.display_name, icon_url=m.display_avatar.url)
 
         em.add_field(name="👛 Bolsa", value=f"`{pl.pocket:^9,}`")
         em.add_field(name="🏦 Banco", value=f"`{pl.bank:^9,}`")
@@ -41,17 +39,13 @@ class Economy(commands.Cog):
 
         id = interaction.user.id
         pl = playerload(id)
-        m = discord.utils.get(self.bot.get_all_members(), id=pl.id)
-
         earns = random.randint(1, random.randint(50, 200))
+        em = EcoEmbed(self.bot, pl.id)
 
         pl.pocket += earns
-        em = discord.Embed()
         em.set_thumbnail(
             url="https://cdn-icons-png.flaticon.com/512/10749/10749511.png"
         )
-        if m:
-            em.set_author(name=m.display_name, icon_url=m.display_avatar.url)
 
         if bool(pl.save()):
             em.color = discord.Color.green()
