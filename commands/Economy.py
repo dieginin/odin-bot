@@ -15,11 +15,11 @@ class Economy(commands.Cog):
         description="Ve cuántos peniques tienes o cuántos tiene algún miembro"
     )
     async def balance(
-        self, interaction: discord.Interaction, member: Optional[discord.Member]
+        self, interaction: discord.Interaction, miembro: Optional[discord.Member]
     ):
         await interaction.response.defer()
 
-        pl = getplayer(interaction.user, member)
+        pl = getplayer(interaction.user, miembro)
         m = discord.utils.get(self.bot.get_all_members(), id=pl.id)
 
         em = discord.Embed(color=discord.Color.random())
