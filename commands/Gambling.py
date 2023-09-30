@@ -59,6 +59,60 @@ class Gambling(commands.Cog):
 
         await interaction.followup.send(embed=em)
 
+    @app_commands.describe(cantidad="Ingresa los peniques que deseas apostar")
+    @app_commands.command(
+        description="Apuesta tus peniques en una tragamonedas"
+    )
+    async def tragamonedas(self, interaction: discord.Interaction, cantidad: int = 500):
+        if cantidad < 100:
+            raise MinimunAmount(100)
+
+        await interaction.response.defer()
+
+        id = interaction.user.id
+        pl = playerload(id)
+
+        if pl.pocket < cantidad:
+            raise InsufficientCoins(cantidad, pl.pocket)
+
+        em = EcoEmbed(self.bot, pl.id)
+        em.set_thumbnail(
+            url="https://cdn-icons-png.flaticon.com/512/1055/1055823.png"
+        )
+        
+        times_factors = random.randint(1,5)
+        earning = int(cantidad*times_factors)
+        
+        final = []
+        for _ in range(3):
+            a = random.choices(["🍉", "💎", "💰", "🍄", "🏆"])
+            final.append(a)
+            
+        final = str(final).replace("'"," ").replace("[[","[").replace(","," | ").replace("]]","]")
+        
+        if len([item for item in final if final.count(item) > 1]) > 0:
+            pl.pocket += earning
+            pl.save()
+            
+            em.title ="Tragamonedas"
+            em.color = discord.Color.green()
+            
+            em.add_field(name=f"Ganaste! 🪙 `{earning:,}`", value=final)
+            em.add_field(name="-"*25, value=f"**Multiplicador** X{times_factors}", inline=False)
+            em.add_field(name="", value=f"**Ahora tienes** 👛 `{pl.pocket:,}`", inline=False)
+        else:
+            pl.pocket -= earning
+            pl.save()
+            
+            em.title ="Tragamonedas"
+            em.color = discord.Color.red()
+            
+            em.add_field(name=f"Perdiste! 🪙 `{earning:,}`", value=final)
+            em.add_field(name="", value=f"**Ahora tienes** 👛 `{pl.pocket:,}`", inline=False)
+        
+        await interaction.followup.send(embed=em)
+            
+
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))
