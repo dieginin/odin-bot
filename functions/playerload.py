@@ -1,14 +1,12 @@
-from connections import DBClient
+from connections import players
 from models import Player
 
 
 def playerload(id: int) -> Player:
-    client = DBClient("players")
-
     while True:
-        pl = client.find(id)
+        result = players.find_one({"_id": id})
 
-        if pl:
-            return pl
+        if result:
+            return Player(**result)
 
-        client.insert(id, {"pocket": 100, "bank": 0})
+        players.insert_one({"_id": id, "pocket": 100, "bank": 0})

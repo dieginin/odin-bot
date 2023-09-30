@@ -1,13 +1,8 @@
-from connections import DBClient
+from connections import players
 from models import Player
 
 
 def playersearch(id: int) -> Player:
-    client = DBClient("players")
+    result = players.find_one({"_id": id})
 
-    pl = client.find(id)
-
-    if pl:
-        return pl
-    else:
-        return Player(id, 0, 0)
+    return Player(**result) if result else Player(id, 0, 0)
