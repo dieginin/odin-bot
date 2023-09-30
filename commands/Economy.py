@@ -6,6 +6,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from components import EcoEmbed
+from errors import InsufficientCoins, SecureCoins
 from functions import getplayer, playerload
 
 
@@ -53,6 +54,33 @@ class Economy(commands.Cog):
         else:
             em.color = discord.Color.dark_red()
             em.description = f"Tuve un 💨\nNo pude guardar \nGanancia de 🪙 `{earns}`"
+
+        await interaction.followup.send(embed=em)
+
+    @app_commands.checks.cooldown(2, 86400, key=lambda i: i.user.id)
+    @app_commands.command(
+        description="Desposita peniques a tu cuenta de banco dos veces al dia"
+    )
+    async def depositar(self, interaction: discord.Interaction, cantidad: int):
+        await interaction.response.defer()
+
+        id = interaction.user.id
+        pl = playerload(id)
+
+        if pl.pocket < cantidad:
+            raise InsufficientCoins(cantidad, pl.pocket)
+
+        if pl.pocket - cantidad < 200:
+            raise SecureCoins(cantidad, pl.pocket, 200)
+
+        em = EcoEmbed(self.bot, pl.id)
+        em.color = discord.Color.green()
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/2580/2580315.png")
+
+        pl.bank += cantidad
+        pl.pocket -= cantidad
+        pl.save()
+        em.description = f"Depositaste 🪙 `{cantidad:,}`\n👛 `{pl.pocket:,}` en la bolsa\n🏦 `{pl.bank:,}` en el banco"
 
         await interaction.followup.send(embed=em)
 
