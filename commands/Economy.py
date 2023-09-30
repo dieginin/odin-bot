@@ -6,7 +6,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from components import EcoEmbed
-from errors import InsufficientCoins, SecureCoins
+from errors import InsufficientBalance, InsufficientCoins, SecureCoins
 from functions import getplayer, playerload
 
 
@@ -81,6 +81,27 @@ class Economy(commands.Cog):
         pl.pocket -= cantidad
         pl.save()
         em.description = f"Depositaste 🪙 `{cantidad:,}`\n👛 `{pl.pocket:,}` en la bolsa\n🏦 `{pl.bank:,}` en el banco"
+
+        await interaction.followup.send(embed=em)
+
+    @app_commands.command(description="Retira peniques de tu cuenta de banco")
+    async def retirar(self, interaction: discord.Interaction, cantidad: int):
+        await interaction.response.defer()
+
+        id = interaction.user.id
+        pl = playerload(id)
+
+        if pl.bank < cantidad:
+            raise InsufficientBalance(cantidad, pl.bank)
+
+        em = EcoEmbed(self.bot, pl.id)
+        em.color = discord.Color.orange()
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/4634/4634765.png")
+
+        pl.bank -= cantidad
+        pl.pocket += cantidad
+        pl.save()
+        em.description = f"Retiraste 🪙 `{cantidad:,}`\n👛 `{pl.pocket:,}` en la bolsa\n🏦 `{pl.bank:,}` en el banco"
 
         await interaction.followup.send(embed=em)
 
