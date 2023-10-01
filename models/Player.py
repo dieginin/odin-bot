@@ -21,6 +21,9 @@ class Player:
         self.animals = animals
 
     def save(self):
+        self.animals = dict(
+            sorted(self.animals.items(), key=lambda item: item[1]["animal"]["value"])
+        )
         character_dict = deepcopy(vars(self))
         character_dict.pop("id")
 
