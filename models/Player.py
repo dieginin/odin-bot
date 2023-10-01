@@ -1,7 +1,8 @@
 from copy import deepcopy
-from typing import Literal
+from typing import Any, Literal
 
 from connections import players
+from models import Animal
 
 
 class Player:
@@ -11,11 +12,13 @@ class Player:
         pocket: int,
         bank: int,
         tools: dict[Literal["bow_and_arrow", "fishing_pole_and_fish", "pick"], int],
+        animals: dict[str, dict[str, Any]],
     ):
         self.id = _id
         self.pocket = pocket
         self.bank = bank
         self.tools = tools
+        self.animals = animals
 
     def save(self):
         character_dict = deepcopy(vars(self))
@@ -30,3 +33,16 @@ class Player:
         quantity: int,
     ):
         self.tools[tool] += quantity
+
+    def change_animal(
+        self,
+        animal: Animal,
+        quantity: int,
+    ):
+        if animal.hash in self.animals.keys():
+            self.animals[animal.hash]["quantity"] += quantity
+        else:
+            self.animals[animal.hash] = {
+                "animal": deepcopy(vars(animal)),
+                "quantity": quantity,
+            }
