@@ -63,7 +63,7 @@ class ErrorHandler(commands.Cog):
             em.title = "Monedas Insuficientes"
             em.description = f"No tienes 🪙 `{coins:,}`\nTienes 👛 `Bolsa: {pocket:,}`"
             em.set_thumbnail(
-                url="https://cdn-icons-png.flaticon.com/512/4952/4952656.png"
+                url="https://cdn-icons-png.flaticon.com/512/148/148766.png"
             )
 
             await interaction.followup.send(embed=em)
@@ -74,7 +74,18 @@ class ErrorHandler(commands.Cog):
             em.title = "Balance Insuficiente"
             em.description = f"No tienes 🪙 `{coins:,}`\nTienes 🏦 `Banco: {bank:,}`"
             em.set_thumbnail(
-                url="https://cdn-icons-png.flaticon.com/512/4952/4952656.png"
+                url="https://cdn-icons-png.flaticon.com/512/148/148766.png"
+            )
+
+            await interaction.followup.send(embed=em)
+        elif isinstance(error.__cause__, InsufficientResources):
+            resource = error.__cause__.resource
+
+            em = discord.Embed(color=discord.Color.dark_red())
+            em.title = "Recursos Insuficientes"
+            em.description = f"No tienes :{resource}: suficientes\nCompra más en la tienda\nO gana dos veces al día"
+            em.set_thumbnail(
+                url="https://cdn-icons-png.flaticon.com/512/148/148766.png"
             )
 
             await interaction.followup.send(embed=em)

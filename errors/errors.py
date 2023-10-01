@@ -8,6 +8,14 @@ class InsufficientCoins(Exception):
         self.pocket = pocket
 
 
+class InsufficientResources(Exception):
+    def __init__(
+        self,
+        resource,
+    ):
+        self.resource = resource
+
+
 class InsufficientBalance(Exception):
     def __init__(
         self,
