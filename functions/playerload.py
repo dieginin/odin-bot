@@ -14,6 +14,6 @@ def playerload(id: int) -> Player:
                 "_id": id,
                 "pocket": 100,
                 "bank": 0,
-                "tools": {"bow": 1, "rod": 1, "pick": 1},
+                "tools": {"bow_and_arrow": 1, "rod": 1, "pick": 1},
             }
         )

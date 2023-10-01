@@ -10,7 +10,7 @@ class Player:
         _id: int,
         pocket: int,
         bank: int,
-        tools: dict[Literal["bow", "rod", "pick"], int],
+        tools: dict[Literal["bow_and_arrow", "rod", "pick"], int],
     ):
         self.id = _id
         self.pocket = pocket
