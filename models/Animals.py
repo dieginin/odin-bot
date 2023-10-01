@@ -17,7 +17,7 @@ class Alien(Animal):
         name = "Alien"
         hash = "alien"
         value = 1500
-        probability = 0.6
+        probability = 0.05
         super().__init__(name, hash, value, probability)
 
 
@@ -25,8 +25,8 @@ class Leon(Animal):
     def __init__(self):
         name = "León"
         hash = "lion"
-        value = 1300
-        probability = 1.6
+        value = 1200
+        probability = 0.14
         super().__init__(name, hash, value, probability)
 
 
@@ -34,8 +34,8 @@ class Tigre(Animal):
     def __init__(self):
         name = "Tigre"
         hash = "tiger"
-        value = 1100
-        probability = 2.6
+        value = 1000
+        probability = 0.23
         super().__init__(name, hash, value, probability)
 
 
@@ -43,8 +43,8 @@ class Elefante(Animal):
     def __init__(self):
         name = "Elefante"
         hash = "elephant"
-        value = 900
-        probability = 3.6
+        value = 800
+        probability = 0.32
         super().__init__(name, hash, value, probability)
 
 
@@ -52,8 +52,8 @@ class Oso(Animal):
     def __init__(self):
         name = "Oso"
         hash = "bear"
-        value = 800
-        probability = 4.6
+        value = 500
+        probability = 0.41
         super().__init__(name, hash, value, probability)
 
 
@@ -61,8 +61,8 @@ class Caballo(Animal):
     def __init__(self):
         name = "Caballo"
         hash = "horse"
-        value = 700
-        probability = 5.6
+        value = 400
+        probability = 1.39
         super().__init__(name, hash, value, probability)
 
 
@@ -70,8 +70,8 @@ class Lobo(Animal):
     def __init__(self):
         name = "Lobo"
         hash = "wolf"
-        value = 600
-        probability = 6.6
+        value = 300
+        probability = 2.37
         super().__init__(name, hash, value, probability)
 
 
@@ -79,8 +79,8 @@ class Zorro(Animal):
     def __init__(self):
         name = "Zorro"
         hash = "fox"
-        value = 500
-        probability = 7.6
+        value = 200
+        probability = 3.35
         super().__init__(name, hash, value, probability)
 
 
@@ -88,8 +88,8 @@ class Mono(Animal):
     def __init__(self):
         name = "Mono"
         hash = "monkey"
-        value = 400
-        probability = 8.6
+        value = 150
+        probability = 4.33
         super().__init__(name, hash, value, probability)
 
 
@@ -97,8 +97,8 @@ class Conejo(Animal):
     def __init__(self):
         name = "Conejo"
         hash = "rabbit"
-        value = 300
-        probability = 9.6
+        value = 100
+        probability = 5.31
         super().__init__(name, hash, value, probability)
 
 
@@ -106,8 +106,8 @@ class Pajaro(Animal):
     def __init__(self):
         name = "Pájaro"
         hash = "bird"
-        value = 200
-        probability = 10.6
+        value = 80
+        probability = 8.2
         super().__init__(name, hash, value, probability)
 
 
@@ -115,8 +115,8 @@ class Gato(Animal):
     def __init__(self):
         name = "Gato"
         hash = "cat"
-        value = 150
-        probability = 11.6
+        value = 60
+        probability = 11.09
         super().__init__(name, hash, value, probability)
 
 
@@ -124,8 +124,8 @@ class Perro(Animal):
     def __init__(self):
         name = "Perro"
         hash = "dog"
-        value = 120
-        probability = 12.6
+        value = 40
+        probability = 13.98
         super().__init__(name, hash, value, probability)
 
 
@@ -133,8 +133,8 @@ class Hamster(Animal):
     def __init__(self):
         name = "Hamster"
         hash = "hamster"
-        value = 80
-        probability = 13.6
+        value = 30
+        probability = 16.87
         super().__init__(name, hash, value, probability)
 
 
@@ -143,5 +143,5 @@ class Pollo(Animal):
         name = "Pollo"
         hash = "chicken"
         value = 10
-        probability = 35
+        probability = 31.96
         super().__init__(name, hash, value, probability)
