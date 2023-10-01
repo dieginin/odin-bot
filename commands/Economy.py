@@ -108,6 +108,34 @@ class Economy(commands.Cog):
 
         await interaction.followup.send(embed=em)
 
+    @app_commands.command(description="Retira peniques de tu cuenta de banco")
+    async def inventario(
+        self, interaction: discord.Interaction, miembro: Optional[discord.Member]
+    ):
+        await interaction.response.defer()
+
+        pl = getplayer(interaction.user, miembro)
+        em = EcoEmbed(self.bot, pl.id)
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/1034/1034813.png")
+
+        em.add_field(name="🏹 Arcos", value=f'`{pl.tools.get("bow_and_arrow"):^9,}`')
+        em.add_field(
+            name="🎣 Cañas", value=f'`{pl.tools.get("fishing_pole_and_fish"):^9,}`'
+        )
+        em.add_field(name="⛏️ Picos", value=f'`{pl.tools.get("pick"):^9,}`')
+
+        animals_ = [
+            f':{pl.animals[animal]["animal"]["hash"]}: {pl.animals[animal]["animal"]["name"]} `x{pl.animals[animal]["quantity"]}`'
+            for animal in pl.animals
+        ]
+        animals_ = "\n".join(animals_) if len(animals_) > 0 else "*Sin animales*"
+
+        em.add_field(name="**☵ Animales**", value=animals_)
+        em.add_field(name="**☵ Peces**", value="*Sin peces*")
+        em.add_field(name="**☵ Reliquias**", value="*Sin reliquias*")
+
+        await interaction.followup.send(embed=em)
+
 
 async def setup(bot):
     await bot.add_cog(Economy(bot))
