@@ -34,7 +34,7 @@ class Economy(commands.Cog):
         await interaction.followup.send(embed=em)
 
     @app_commands.checks.cooldown(2, 86400, key=lambda i: i.user.id)
-    @app_commands.command(description="Gana peniques dos veces cada dia")
+    @app_commands.command(description="Gana peniques y herramientas dos veces cada dia")
     async def ganar(self, interaction: discord.Interaction):
         await interaction.response.defer()
 
