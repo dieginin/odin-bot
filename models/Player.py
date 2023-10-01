@@ -23,3 +23,10 @@ class Player:
 
         result = players.update_one({"_id": self.id}, {"$set": character_dict})
         return result.modified_count
+
+    def change_tools(
+        self,
+        tool: Literal["bow_and_arrow", "fishing_pole_and_fish", "pick"],
+        quantity: int,
+    ):
+        self.tools[tool] += quantity

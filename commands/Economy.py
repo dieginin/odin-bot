@@ -40,17 +40,20 @@ class Economy(commands.Cog):
 
         id = interaction.user.id
         pl = playerload(id)
-        earns = random.randint(1, random.randint(50, 200))
+        earns = random.randint(1, random.randint(50, random.randint(200, 1000)))
+        tool = random.choice(list(pl.tools.keys()))
+        tearns = random.randint(1, random.randint(2, 5))
         em = EcoEmbed(self.bot, pl.id)
 
         pl.pocket += earns
+        pl.change_tools(tool, tearns)
         em.set_thumbnail(
             url="https://cdn-icons-png.flaticon.com/512/10749/10749511.png"
         )
 
         if bool(pl.save()):
             em.color = discord.Color.green()
-            em.description = f"Ganaste 🪙 `{earns}`\nAhora tienes 👛 `{pl.pocket:,}`"
+            em.description = f"Ganaste 🪙 `{earns}`\nAhora tienes 👛 `{pl.pocket:,}`\nTambién ganaste `x{tearns}` :{tool}:"
         else:
             em.color = discord.Color.dark_red()
             em.description = f"Tuve un 💨\nNo pude guardar \nGanancia de 🪙 `{earns}`"
