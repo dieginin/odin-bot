@@ -9,4 +9,11 @@ def playerload(id: int) -> Player:
         if result:
             return Player(**result)
 
-        players.insert_one({"_id": id, "pocket": 100, "bank": 0})
+        players.insert_one(
+            {
+                "_id": id,
+                "pocket": 100,
+                "bank": 0,
+                "tools": {"bow": 1, "rod": 1, "pick": 1},
+            }
+        )

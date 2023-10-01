@@ -1,4 +1,5 @@
 from copy import deepcopy
+from typing import Literal
 
 from connections import players
 
@@ -9,10 +10,12 @@ class Player:
         _id: int,
         pocket: int,
         bank: int,
+        tools: dict[Literal["bow", "rod", "pick"], int],
     ):
         self.id = _id
         self.pocket = pocket
         self.bank = bank
+        self.tools = tools
 
     def save(self):
         character_dict = deepcopy(vars(self))
