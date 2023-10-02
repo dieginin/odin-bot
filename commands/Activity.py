@@ -7,7 +7,7 @@ from discord.ext import commands
 from components import EcoEmbed
 from errors import InsufficientResources
 from functions import playerload
-from models import Animal
+from models import Animal, Fish
 
 
 class Activity(commands.Cog):
@@ -39,6 +39,35 @@ class Activity(commands.Cog):
         else:
             em.color = discord.Color.red()
             em.description = f"**Oh no!**\nUn :{animal.hash}: `{animal.name}` se te escapó\nMejor suerte para la próxima"
+        pl.save()
+
+        await interaction.followup.send(embed=em)
+
+    @app_commands.command(description="Utiliza tus cañas para pescar peces")
+    async def pescar(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+
+        id = interaction.user.id
+        pl = playerload(id)
+
+        if pl.tools["fishing_pole_and_fish"] <= 0:
+            raise InsufficientResources("fishing_pole_and_fish")
+
+        em = EcoEmbed(self.bot, pl.id)
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/4617/4617143.png")
+
+        pl.change_tools("fishing_pole_and_fish", -1)
+        weights = [a().probability for a in Fish.__subclasses__()]  # type: ignore
+        fish = random.choices(Fish.__subclasses__(), weights=weights)[0]()  # type: ignore
+
+        got = random.choices([0, 1], weights=[0.1, 0.9], k=1)[0]
+        if got:
+            pl.change_fish(fish, 1)
+            em.color = discord.Color.green()
+            em.description = f"**Felicidades!**\nPescaste :{fish.hash}: `{fish.name}`\nTienes `x{pl.fishes[fish.hash]['quantity']:,} {fish.name}`"
+        else:
+            em.color = discord.Color.red()
+            em.description = f"**Oh no!**\n:{fish.hash}: `{fish.name}` se escabulló\nMejor suerte para la próxima"
         pl.save()
 
         await interaction.followup.send(embed=em)
