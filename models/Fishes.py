@@ -102,9 +102,9 @@ class Langosta(Fish):
         super().__init__(name, hash, value, probability)
 
 
-class Globo(Fish):
+class Fogu(Fish):
     def __init__(self):
-        name = "Pez Globo"
+        name = "Fogu"
         hash = "blowfish"
         value = 80
         probability = 8.2
