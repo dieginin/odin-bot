@@ -63,7 +63,7 @@ class Player:
         if fish.hash in self.fishes.keys():
             self.fishes[fish.hash]["quantity"] += quantity
         else:
-            self.animals[fish.hash] = {
+            self.fishes[fish.hash] = {
                 "fish": deepcopy(vars(fish)),
                 "quantity": quantity,
             }
