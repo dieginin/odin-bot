@@ -132,12 +132,17 @@ class Economy(commands.Cog):
             f':{pl.fishes[fish]["fish"]["hash"]}: {pl.fishes[fish]["fish"]["name"]} `x{pl.fishes[fish]["quantity"]}`'
             for fish in pl.fishes
         ]
+        relics_ = [
+            f':{pl.relics[relic]["relic"]["hash"]}: {pl.relics[relic]["relic"]["name"]} `x{pl.relics[relic]["quantity"]}`'
+            for relic in pl.relics
+        ]
         animals_ = "\n".join(animals_) if len(animals_) > 0 else "*Sin animales*"
         fishes_ = "\n".join(fishes_) if len(fishes_) > 0 else "*Sin peces*"
+        relics_ = "\n".join(relics_) if len(relics_) > 0 else "*Sin reliquias*"
 
         em.add_field(name="**☵ Animales**", value=animals_)
         em.add_field(name="**☵ Peces**", value=fishes_)
-        em.add_field(name="**☵ Reliquias**", value="*Sin reliquias*")
+        em.add_field(name="**☵ Reliquias**", value=relics_)
 
         await interaction.followup.send(embed=em)
 

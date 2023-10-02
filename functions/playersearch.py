@@ -15,5 +15,6 @@ def playersearch(id: int) -> Player:
             {"bow_and_arrow": 0, "fishing_pole_and_fish": 0, "pick": 0},
             {},
             {},
+            {},
         )
     )
