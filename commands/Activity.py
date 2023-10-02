@@ -7,7 +7,7 @@ from discord.ext import commands
 from components import EcoEmbed
 from errors import InsufficientResources
 from functions import playerload
-from models import Animal, Fish
+from models import Animal, Fish, Relic
 
 
 class Activity(commands.Cog):
@@ -68,6 +68,35 @@ class Activity(commands.Cog):
         else:
             em.color = discord.Color.red()
             em.description = f"**Oh no!**\n:{fish.hash}: `{fish.name}` se escabulló\nMejor suerte para la próxima"
+        pl.save()
+
+        await interaction.followup.send(embed=em)
+
+    @app_commands.command(description="Utiliza tus picos para encontrar reliquias")
+    async def encontrar(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+
+        id = interaction.user.id
+        pl = playerload(id)
+
+        if pl.tools["pick"] <= 0:
+            raise InsufficientResources("pick")
+
+        em = EcoEmbed(self.bot, pl.id)
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/1406/1406196.png")
+
+        pl.change_tools("pick", -1)
+        weights = [a().probability for a in Relic.__subclasses__()]  # type: ignore
+        relic = random.choices(Relic.__subclasses__(), weights=weights)[0]()  # type: ignore
+
+        find = random.choices([0, 1], weights=[0.1, 0.9], k=1)[0]
+        if find:
+            pl.change_relic(relic, 1)
+            em.color = discord.Color.green()
+            em.description = f"**Felicidades!**\nEncontraste :{relic.hash}: `{relic.name}`\nTienes `x{pl.relics[relic.hash]['quantity']:,} {relic.name}`"
+        else:
+            em.color = discord.Color.red()
+            em.description = f"**Oh no!**\n:{relic.hash}: `{relic.name}` se te cayó\nMejor suerte para la próxima"
         pl.save()
 
         await interaction.followup.send(embed=em)
