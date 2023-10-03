@@ -83,7 +83,7 @@ class ErrorHandler(commands.Cog):
 
             em = discord.Embed(color=discord.Color.dark_red())
             em.title = "Recursos Insuficientes"
-            em.description = f"No tienes :{resource}: suficientes\nCompra más en la tienda\nO gana dos veces al día"
+            em.description = f"No tienes :{resource}: suficientes\nCompra más en `/tienda`\nO gana dos veces al día"
             em.set_thumbnail(
                 url="https://cdn-icons-png.flaticon.com/512/148/148766.png"
             )
