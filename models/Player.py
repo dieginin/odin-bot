@@ -59,6 +59,8 @@ class Player:
                 "animal": deepcopy(vars(animal)),
                 "quantity": quantity,
             }
+        if self.animals[animal.hash]["quantity"] == 0:
+            self.animals.pop(animal.hash)
 
     def change_fish(
         self,
@@ -72,6 +74,8 @@ class Player:
                 "fish": deepcopy(vars(fish)),
                 "quantity": quantity,
             }
+        if self.fishes[fish.hash]["quantity"] == 0:
+            self.fishes.pop(fish.hash)
 
     def change_relic(
         self,
@@ -85,3 +89,5 @@ class Player:
                 "relic": deepcopy(vars(relic)),
                 "quantity": quantity,
             }
+        if self.relics[relic.hash]["quantity"] == 0:
+            self.relics.pop(relic.hash)
