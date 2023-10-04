@@ -8,6 +8,7 @@ from discord.ext import commands
 from components import EcoEmbed
 from errors import InsufficientBalance, InsufficientCoins, SecureCoins
 from functions import getplayer, playerload
+from views import ShopHome
 
 
 class Economy(commands.Cog):
@@ -145,6 +146,20 @@ class Economy(commands.Cog):
         em.add_field(name="**☵ Reliquias**", value=relics_)
 
         await interaction.followup.send(embed=em)
+
+    @app_commands.command(description="Compra herramientas o vende cosas")
+    async def tienda(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        id = interaction.user.id
+        pl = playerload(id)
+        em = EcoEmbed(self.bot, pl.id)
+        em.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/4634/4634649.png")
+
+        em.description = "**Tienda**\nHola bienvenido,\nQue deseas hacer?"
+
+        view = ShopHome(pl, self.bot)
+        view.message = await interaction.followup.send(embed=em, view=view)  # type: ignore
 
 
 async def setup(bot):
